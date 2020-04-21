@@ -1,10 +1,11 @@
 {
   "name": "use-context-selection",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
-  "author": "edriang",
+  "description": "Improved hook to select partial data from your Context and get updates on your components only when that specific piece of data changes.",
+  "author": "Adrián Gallardo",
   "license": "MIT",
   "repository": "edriang/use-context-selection",
+  "homepage": "https://edriang.github.io/use-context-selection",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
@@ -20,8 +21,8 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "predeploy": "cd example/compare-context && npm install && npm run build",
+    "deploy": "gh-pages -d example/compare-context/build"
   },
   "peerDependencies": {
     "react": "^16.0.0"

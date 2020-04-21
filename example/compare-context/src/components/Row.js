@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const Component = ({ value, setValue, name, buttonsDisabled }) => {
+const Component = ({ value, setValue, name }) => {
     const updateValue = () => {
         setValue(Date.now());
     }
@@ -20,7 +20,7 @@ const Component = ({ value, setValue, name, buttonsDisabled }) => {
                 <p>{moment(value).format('hh:mm:ss.SSS')}</p>
             </td>
             <td>
-                <button style={{whiteSpace: 'nowrap'}} className={`btn btn-primary btn-sm ${buttonsDisabled ? 'disabled' : ''}`} onClick={updateValue}>Update value</button>
+                <button style={{whiteSpace: 'nowrap'}} className={`btn btn-primary btn-sm`} onClick={updateValue}>Update value</button>
             </td>
         </tr>
         

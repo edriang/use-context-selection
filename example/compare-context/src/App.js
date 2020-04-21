@@ -36,8 +36,7 @@ function App() {
   const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
 
   return (
-    <div className="App">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+    <div className={`App container container-xl ${buttonsDisabled ? 'buttons-disabled' : ''}`}>
       <div className="pb-5">
         <h1>Performance comparison</h1>
         <p>Enter the number of rows you want to render</p>
@@ -69,7 +68,7 @@ function App() {
             <table className="table context">
               <tbody>
                   {(new Array(numOfRows).fill(0).map((_, index) => (
-                    <RowWithRegularContext key={`row-${index}`} name={`Row ${index + 1}A`} index={index} buttonsDisabled={buttonsDisabled} />
+                    <RowWithRegularContext key={`row-${index}`} name={`Row ${index + 1}A`} index={index} />
                   )))}
               </tbody>
             </table>
@@ -87,7 +86,7 @@ function App() {
             <table className="table use-context-selection">
                 <tbody>
                   {(new Array(numOfRows).fill(0).map((_, index) => (
-                    <RowWithImprovedContext key={`row-${index}`} name={`Row ${index + 1}B`} index={index} buttonsDisabled={buttonsDisabled} />
+                    <RowWithImprovedContext key={`row-${index}`} name={`Row ${index + 1}B`} index={index} />
                   )))}
                 </tbody>
             </table>

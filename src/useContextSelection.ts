@@ -8,7 +8,6 @@ type GetterFn = (state: any) => any;
 type Listener = {
   getterFn: GetterFn;
   forceUpdate: Function;
-  result: any;
 };
 type ContextListeners = Map<number, Listener>;
 
@@ -34,9 +33,8 @@ function createContext<T>(initValue: any): React.Context<T> {
     for (const [, listener] of listeners) {
       const newResult = listener.getterFn(newValue);
 
-      if (!isEqualShallow(newResult, listener.result)) {
-        listener.result = newResult;
-        listener.forceUpdate();
+      if (!isEqualShallow(newResult, listener.getterFn(oldValue))) {
+        listener.forceUpdate(newResult);
       }
     }
     return 0;
@@ -50,7 +48,8 @@ function createContext<T>(initValue: any): React.Context<T> {
 
 function useContextSelection<T = any>(Context: React.Context<T>, getterFn: GetterFn): Partial<T> {
   const listenerID = React.useRef(LISTENER_UID++);
-  const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0);
+  const contextValue = React.useContext(Context);
+  const [currentSelection, forceUpdate] = React.useState<any>(getterFn(contextValue));
 
   React.useEffect(() => {
     return () => {
@@ -79,18 +78,14 @@ function useContextSelection<T = any>(Context: React.Context<T>, getterFn: Gette
   let listener = listeners.get(listenerID.current);
 
   if (!listener) {
-    const contextValue = React.useContext(Context);
-
     listener = {
       getterFn,
       forceUpdate,
-      result: getterFn(contextValue),
     };
-
     listeners.set(listenerID.current, listener);
   }
 
-  return listener.result;
+  return currentSelection;
 }
 
 export { createContext, useContextSelection };
