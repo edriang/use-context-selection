@@ -71,7 +71,7 @@ const [ a, b ] = useContextSelection(state => [state.a, state.b]);
 First, you need to create a new `Context` using the `createContext` function included in this library (using `React.createContext` won't work as expected).
 
 ```javascript
-import { createContext } from 'use-context-selection';
+import { createContext, useContextSelection } from 'use-context-selection';
 
 const AuthContext = createContext({});
 ```
@@ -95,6 +95,7 @@ const AuthProvider = ({ children }) => {
   const contextValue = {
     user,
     loginFn,
+    isLoading,
     isAuthenticated: Boolean(user),
   };
 
@@ -104,10 +105,10 @@ const AuthProvider = ({ children }) => {
 }
 ```
 
-Finally, from you component you can listen for specific parts of the state:
+Now, from you component you can listen for specific parts of the state:
 
 ```javascript
-const App = () => {
+const AppContent = () => {
   const { isLoading, loginFn } = useContextSelection(AuthContext, state => ({
     isLoading: state.isLoading,
     loginFn: state.loginFn,
@@ -116,22 +117,35 @@ const App = () => {
   if (isLoading) {
     return 'Loading...';
   }
-  return <LoginForm loginFn={loginFn}>
+  return <LoginForm loginFn={loginFn} />;
 }
 ```
 
-You can also use a selection function using `Context.Consumer` component in this way:
+Finally, remember to wrap your application with the Provider.
+
+```javascript
+export default App = () => {
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+}
+```
+
+
+Or you can also use a selection function using `Context.Consumer` component in this way:
 
 ```javascript
 const App = () => (
-  <AuthContext.Consumer selector={state => ({ isLoading: state.isLoading, loginFn: state.loginFn })}>
-    {({ isLoading, loginFn }) => {
-      if (isLoading) {
-        return 'Loading...';
-      }
-      return <LoginForm loginFn={loginFn} />;
-    }}
-  </AuthContext.Consumer>
+  <AuthProvider>
+    <AuthContext.Consumer selector={state => ({ isLoading: state.isLoading, loginFn: state.loginFn })}>
+      {({ isLoading, loginFn }) => {
+        if (isLoading) {
+          return 'Loading...';
+        }
+        return <LoginForm loginFn={loginFn} />;
+      }}
+    </AuthContext.Consumer>
+  </AuthProvider>
 );
 ```
 

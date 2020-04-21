@@ -7,7 +7,7 @@ import { RegularProvider, ImprovedProvider, ImprovedContext } from './context';
 import RowWithRegularContext from './components/RowWithRegularContext';
 import RowWithImprovedContext from './components/RowWithImprovedContext';
 
-const NUM_ROWS = 200;
+const NUM_ROWS = 300;
 
 function simulateClicks(tableClassName, setButtonsDisabled) {
   const buttons = document.querySelectorAll(`.table.${tableClassName} .btn`);
