@@ -1,6 +1,6 @@
 {
   "name": "ignore-compare-context",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "homepage": "https://edriang.github.io/use-context-selection",
   "dependencies": {

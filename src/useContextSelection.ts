@@ -3,6 +3,9 @@ import React from 'react';
 import isEqualShallow from './isShallowEqual';
 
 let LISTENER_UID = 1;
+const COMMON_ERROR = `An error occurred while processing 'useContextSelection' hook; check the following:
+- You've wrapped your application code with the 'Context.Provider'.
+- Your getter function doesn't throw errors.`;
 
 type GetterFn = (state: any) => any;
 type Listener = {
@@ -14,11 +17,13 @@ type ContextListeners = Map<number, Listener>;
 const contextListeners = new Map<React.Context<any>, ContextListeners>();
 
 function createContextConsumer<T>(Context: React.Context<T>) {
-  return ({ children, selector = (store: any) => store }: any) => {
+  function ContextSelectionConsumer({ children, selector = (store: any) => store }: any) {
     const contextValue = useContextSelection(Context, selector);
 
     return children(contextValue);
-  };
+  }
+
+  return ContextSelectionConsumer;
 }
 
 function createContext<T>(initValue: any): React.Context<T> {
@@ -47,9 +52,22 @@ function createContext<T>(initValue: any): React.Context<T> {
 }
 
 function useContextSelection<T = any>(Context: React.Context<T>, getterFn: GetterFn): Partial<T> {
+  if (Context.Consumer.name !== 'ContextSelectionConsumer') {
+    throw new Error(
+      `You need to provide a 'Context' instance created with 'createContext()' function from 'use-context-selection' library.`
+    );
+  }
+
   const listenerID = React.useRef(LISTENER_UID++);
   const contextValue = React.useContext(Context);
-  const [currentSelection, forceUpdate] = React.useState<any>(getterFn(contextValue));
+  let currentSelection;
+  let forceUpdate;
+
+  try {
+    [currentSelection, forceUpdate] = React.useState<any>(getterFn(contextValue));
+  } catch (e) {
+    throw new Error(`${COMMON_ERROR}\nAdditional error details: ${e.message}`);
+  }
 
   React.useEffect(() => {
     return () => {
