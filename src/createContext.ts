@@ -4,12 +4,15 @@ import isEqualShallow from './isShallowEqual';
 import createContextConsumer from './createContextConsumer';
 import { contextListeners } from './globals';
 
-function createContextDispatcher<T>(listeners: Set<ContextListener<T>>): ContextComparator<T> {
+function createContextDispatcher<T>(
+  listeners: Set<ContextListener<T>>,
+  equalityFn: EqualityFn<T> = isEqualShallow
+): ContextComparator<T> {
   return (oldValue: T, newValue: T): 0 => {
     for (const listener of listeners) {
       const newResult = listener.selection(newValue);
 
-      if (!isEqualShallow(newResult, listener.selection(oldValue))) {
+      if (!equalityFn(newResult, listener.selection(oldValue))) {
         listener.forceUpdate(newResult);
       }
     }
@@ -18,11 +21,11 @@ function createContextDispatcher<T>(listeners: Set<ContextListener<T>>): Context
   };
 }
 
-function createContext<T>(initValue: T): CustomContext<T> {
+function createContext<T>(initValue: T, equalityFn?: EqualityFn<T>): CustomContext<T> {
   const listeners = new Set<ContextListener<T>>();
 
   // @ts-ignore
-  const Context = React.createContext<T>(initValue, createContextDispatcher<T>(listeners));
+  const Context = React.createContext<T>(initValue, createContextDispatcher<T>(listeners, equalityFn));
 
   contextListeners.set(Context, listeners);
 

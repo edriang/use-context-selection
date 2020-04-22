@@ -12,6 +12,7 @@
         - [useContextSelection](#usecontextselection)
     - [Usage](#usage)
     - [Demo App](#demo-app)
+    - [Related projects](#related-projects)
     - [Disclaimer](#disclaimer)
     - [License](#license)
 
@@ -75,9 +76,10 @@ const [ a, b ] = useContextSelection(state => [state.a, state.b]);
 
 Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
 
-| Param | Type | Description | Default / Required |
+| Param | Type | Description | Optional / Required |
 |-------|-------------|-------------|---------------|
 | initValue | any | Initial value for the Context | Required |
+| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional |
 
 - **Return Value**: Context
 
@@ -89,7 +91,7 @@ This Hook will trigger a re-render on your component every-time these conditions
 - The state on your `Context` changes
 - The `selection` function returns a different value since the last time it rendered
 
-| Param | Type | Description | Default / Required |
+| Param | Type | Description | Optional / Required |
 |-------|-------------|-------------|---------------|
 | Context | Context | Context created with `createContext` function from this library | Required |
 | selection | Function | Use this selection function to retrieve data from your Context; receives the current state / value and should return whatever your component needs | Required |
@@ -184,13 +186,19 @@ const App = () => (
 Check performance comparison against `useContext` hook on the following app-example:
 [https://edriang.github.io/use-context-selection/](https://edriang.github.io/use-context-selection/)
 
-
-## Disclaimer
-
-This library was inspired by [use-context-selector](https://www.npmjs.com/package/use-context-selector).
+## Related projects
 
 This library is used internally by [react-connect-context-hooks](https://www.npmjs.com/package/react-connect-context-hooks), a library for easily managing application-state.
 
+## Disclaimer
+
+This library was inspired by [use-context-selector](https://www.npmjs.com/package/use-context-selector), but here are some key differences:
+- `use-context-selection` allows you to specify a custom `equality-check` function.
+- Internally, `use-context-selection` manages different set of listeners per Context, while `use-context-selector` stores all listeners (even for different Contexts) within a single shared Set.
+- `use-context-selection` allows you to use an enhanced version of `Context.Consumer` component, which supports `selection` functions like `useContextSelection` hook.
+- `use-context-selector` [executes different logic](https://github.com/dai-shi/use-context-selector/blob/3f1df8f818176db835dc894fff191e9a4d2f8a68/src/index.js#L9) when running in `production` mode than while in `development`. In production mode it'll trigger updates on listener components during the `render` phase; this behavior is something React would complain about with some scary warning messages on the console if it runs on `development` mode.
+
+That being said, based on some internal testing, both libraries are seamlessly performant.
 
 ## License
 

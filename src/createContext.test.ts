@@ -106,4 +106,20 @@ describe('createContextDispatcher', () => {
 
     expect(forceUpdate).toHaveBeenCalledTimes(0);
   });
+
+  it('accepts custom comparator function', () => {
+    const forceUpdate = jest.fn();
+    const equalityFn = () => false;
+    const state = { a: 'a', b: 'b' };
+    const newState = { a: 'a', b: 'b' };
+    const listener1: ContextListener<any> = {
+      selection: (state: any) => state,
+      forceUpdate,
+    };
+    const comparator = createContextDispatcher(new Set([listener1]), equalityFn);
+
+    comparator(state, newState);
+
+    expect(forceUpdate).toHaveBeenCalledWith(newState);
+  });
 });
