@@ -80,7 +80,7 @@ function App() {
             <button disabled={buttonsDisabled} className="btn btn-success btn-sm float-right" onClick={() => simulateClicks('use-context-selection', setButtonsDisabled)}>{ buttonsDisabled ? 'Processing...' : 'Simulate Click All' }</button>
           </h2>
           <ImprovedProvider numOfRows={numOfRows}>
-            {/* <ImprovedContext.Consumer selector={state => ({ length: state.rows.length })}>
+            {/* <ImprovedContext.Consumer selection={state => ({ length: state.rows.length })}>
               {({ length }) => String(length)}
             </ImprovedContext.Consumer> */}
             <table className="table use-context-selection">

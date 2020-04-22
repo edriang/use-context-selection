@@ -1,20 +1,21 @@
 {
   "name": "use-context-selection",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Improved hook to select partial data from your Context and get updates on your components only when that specific piece of data changes.",
   "author": "Adrián Gallardo",
   "license": "MIT",
   "repository": "edriang/use-context-selection",
   "homepage": "https://edriang.github.io/use-context-selection",
   "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
   "source": "src/index.tsx",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
     "prepublish": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -28,11 +29,12 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.0.3",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.1.4",
     "@types/react": "^16.9.27",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
-    "microbundle-crl": "^0.13.8",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
@@ -50,9 +52,18 @@
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "react-test-renderer": "^16.13.1",
+    "rollup": "^2.7.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-typescript3": "^1.1.2",
+    "typescript": "^3.8.3"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "types": "./dist/index.d.ts"
 }

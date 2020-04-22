@@ -68,7 +68,7 @@ const [ a, b ] = useContextSelection(state => [state.a, state.b]);
 
 ## Usage
 
-First, you need to create a new `Context` using the `createContext` function included in this library (using `React.createContext` won't work as expected).
+First, you need to create a new `Context` using the `createContext` function included in this library (using `React.createContext` will throw an error).
 
 ```javascript
 import { createContext, useContextSelection } from 'use-context-selection';
@@ -137,7 +137,7 @@ Or you can also use a selection function using `Context.Consumer` component in t
 ```javascript
 const App = () => (
   <AuthProvider>
-    <AuthContext.Consumer selector={state => ({ isLoading: state.isLoading, loginFn: state.loginFn })}>
+    <AuthContext.Consumer selection={state => ({ isLoading: state.isLoading, loginFn: state.loginFn })}>
       {({ isLoading, loginFn }) => {
         if (isLoading) {
           return 'Loading...';
