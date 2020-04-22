@@ -7,11 +7,12 @@
     - [What?](#what)
     - [Why?](#why)
     - [How?](#how)
+    - [Usage](#usage)
+    - [Demo App](#demo-app)
     - [API](#api)
         - [createContext](#createcontext)
         - [useContextSelection](#usecontextselection)
-    - [Usage](#usage)
-    - [Demo App](#demo-app)
+        - [isEqualShallow](#isequalshallow)
     - [Related projects](#related-projects)
     - [Disclaimer](#disclaimer)
     - [License](#license)
@@ -69,34 +70,6 @@ or even this:
 ```javascript
 const [ a, b ] = useContextSelection(state => [state.a, state.b]);
 ```
-
-## API
-
-### createContext
-
-Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
-
-| Param | Type | Description | Optional / Required |
-|-------|-------------|-------------|---------------|
-| initValue | any | Initial value for the Context | Required |
-| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional |
-
-- **Return Value**: Context
-
-### useContextSelection
-
-Hook to access your Context state; receives a `Context` object created with `createContext` function and a `selection` function.
-
-This Hook will trigger a re-render on your component every-time these conditions are met:
-- The state on your `Context` changes
-- The `selection` function returns a different value since the last time it rendered
-
-| Param | Type | Description | Optional / Required |
-|-------|-------------|-------------|---------------|
-| Context | Context | Context created with `createContext` function from this library | Required |
-| selection | Function | Use this selection function to retrieve data from your Context; receives the current state / value and should return whatever your component needs | Required |
-
-- **Return Value**: any; whatever you are returning on `selection` function.
 
 ## Usage
 
@@ -185,6 +158,52 @@ const App = () => (
 
 Check performance comparison against `useContext` hook on the following app-example:
 [https://edriang.github.io/use-context-selection/](https://edriang.github.io/use-context-selection/)
+
+
+## API
+
+### createContext
+
+Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
+
+| Param | Type | Description | Optional / Required |
+|-------|-------------|-------------|---------------|
+| initValue | any | Initial value for the Context | Required |
+| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional |
+
+- **Return Value**: Context
+
+### useContextSelection
+
+Hook to access your Context state; receives a `Context` object created with `createContext` function and a `selection` function.
+
+This Hook will trigger a re-render on your component every-time these conditions are met:
+- The state on your `Context` changes
+- The `selection` function returns a different value since the last time it rendered
+
+| Param | Type | Description | Optional / Required |
+|-------|-------------|-------------|---------------|
+| Context | Context | Context created with `createContext` function from this library | Required |
+| selection | Function | Use this selection function to retrieve data from your Context; receives the current state / value and should return whatever your component needs | Required |
+
+- **Return Value**: any; whatever you are returning on `selection` function.
+
+### isEqualShallow
+
+This is the default comparator function used internally if `equalityFn` param is not provided to `createContext`.
+
+This function is exported as part of the library in case you need it as foundations for your own equality check function.
+
+You need to remember two things about this default equality function:
+- As the name already implies, it performs a **shallow** equality check for performance reassons;
+- It will ignore comparing `functions`; this comes handy as you'd probably include in your store functions to mutate the current state; this way there is no need to memoize the functions (e.g. using `React.useCallback`).
+
+| Param | Type | Description | Optional / Required |
+|-------|-------------|-------------|---------------|
+| newState | any | New state to compare with | Required |
+| oldState | any | Old state to compare with | Required |
+
+- **Return Value**: boolean; whether both states are considered the same or not.
 
 ## Related projects
 

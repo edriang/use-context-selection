@@ -2,7 +2,7 @@ import React from 'react';
 
 import { contextListeners, contextConsumerTypeSymbol } from './globals';
 
-function useContextSelection<T = any>(Context: React.Context<T>, selection: Selector<T>): Partial<T> {
+function useContextSelection<T = any>(Context: React.Context<T>, selection: Selector<T>): any {
   if (process.env.NODE_ENV !== 'production') {
     // @ts-ignore
     if (Context.Consumer.$$type !== contextConsumerTypeSymbol) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import isEqualShallow from './isShallowEqual';
+import isEqualShallow from './isEqualShallow';
 import createContextConsumer from './createContextConsumer';
 import { contextListeners } from './globals';
 
