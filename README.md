@@ -7,6 +7,9 @@
     - [What?](#what)
     - [Why?](#why)
     - [How?](#how)
+    - [API](#api)
+        - [createContext](#createcontext)
+        - [useContextSelection](#usecontextselection)
     - [Usage](#usage)
     - [Demo App](#demo-app)
     - [Disclaimer](#disclaimer)
@@ -65,6 +68,33 @@ or even this:
 ```javascript
 const [ a, b ] = useContextSelection(state => [state.a, state.b]);
 ```
+
+## API
+
+### createContext
+
+Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
+
+| Param | Type | Description | Default / Required |
+|-------|-------------|-------------|---------------|
+| initValue | any | Initial value for the Context | Required |
+
+- **Return Value**: Context
+
+### useContextSelection
+
+Hook to access your Context state; receives a `Context` object created with `createContext` function and a `selection` function.
+
+This Hook will trigger a re-render on your component every-time these conditions are met:
+- The state on your `Context` changes
+- The `selection` function returns a different value since the last time it rendered
+
+| Param | Type | Description | Default / Required |
+|-------|-------------|-------------|---------------|
+| Context | Context | Context created with `createContext` function from this library | Required |
+| selection | Function | Use this selection function to retrieve data from your Context; receives the current state / value and should return whatever your component needs | Required |
+
+- **Return Value**: any; whatever you are returning on `selection` function.
 
 ## Usage
 
