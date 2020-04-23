@@ -1,7 +1,16 @@
 {
   "name": "use-context-selection",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Improved hook to select partial data from your Context and get updates on your components only when that specific piece of data changes.",
+  "keywords": [
+    "react",
+    "context",
+    "hooks",
+    "performance",
+    "selection",
+    "selector",
+    "state management"
+  ],
   "author": "Adrián Gallardo",
   "license": "MIT",
   "repository": "edriang/use-context-selection",
