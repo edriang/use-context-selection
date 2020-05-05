@@ -37,6 +37,15 @@ describe('createContextConsumer', () => {
     expect(result.current).toBe(state.a);
   });
 
+  it('does not call the returned selection if it is a function', () => {
+    const Context = createContext({});
+    const spyFn = jest.fn();
+    const { result } = renderHook(() => useContextSelection(Context, () => spyFn));
+
+    expect(result.current).toBe(spyFn);
+    expect(spyFn).not.toHaveBeenCalled();
+  });
+
   it('adds listeners when executed useContextSelection on new mounted component', () => {
     const Context = createContext({});
     renderHook(() => useContextSelection(Context, () => {}));

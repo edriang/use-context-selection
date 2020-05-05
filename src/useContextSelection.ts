@@ -13,7 +13,7 @@ function useContextSelection<T = any>(Context: React.Context<T>, selection: Sele
   }
 
   const contextValue = React.useContext(Context);
-  const [currentSelection, forceUpdate] = React.useState<any>(selection(contextValue));
+  const [currentSelection, forceUpdate] = React.useState<any>(() => selection(contextValue));
   const listener = React.useRef({ selection, forceUpdate });
 
   React.useEffect(() => {
