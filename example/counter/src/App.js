@@ -53,11 +53,12 @@ const Counter1 = () => {
 const Counter2 = () => {
   console.log('Counter 2');
 
-  const { count2, increment2 } = useContextSelection(Context, function getter2(state) {
-    return {
-      count2: state.count2,
-      increment2: state.increment2,
-    }
+  const increment2 = useContextSelection(Context, function getter2_1(state) {
+    return state.increment2;
+  });
+
+  const count2 = useContextSelection(Context, function getter2_2(state) {
+    return state.count2;
   });
 
   return (

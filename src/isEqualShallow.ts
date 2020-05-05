@@ -1,6 +1,13 @@
 const hasOwn = {}.hasOwnProperty;
 
 function isEqualShallow(a: any, b: any): boolean {
+  if (typeof a === 'function') {
+    return true;
+  }
+  if (typeof a !== 'object') {
+    return a === b;
+  }
+
   if (a === b) return true;
   if (!a || !b) return false;
 
