@@ -1,6 +1,6 @@
 {
   "name": "use-context-selection",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Improved hook to select partial data from your Context and get updates on your components only when that specific piece of data changes.",
   "keywords": [
     "react",
