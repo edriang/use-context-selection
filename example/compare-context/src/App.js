@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-import { RegularProvider, ImprovedProvider, ImprovedContext } from './context';
+import { RegularProvider, ImprovedProvider } from './context';
 
 import RowWithRegularContext from './components/RowWithRegularContext';
 import RowWithImprovedContext from './components/RowWithImprovedContext';
