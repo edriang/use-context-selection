@@ -1,5 +1,11 @@
 # use-context-selection
 
+## IMPORTANT NOTE!
+
+> This library won't work as expected for `React >= 18`, as the `unstable_changedBits` property from `createContext` is no longer supported.
+> 
+> The recommendation is to migrate to [use-context-selector](https://www.npmjs.com/package/use-context-selector) library instead, which uses a different approach for scheduling updates when a part of your whole state gets updated.
+
 <!-- TOC -->
 
 - [use-context-selection](#use-context-selection)
